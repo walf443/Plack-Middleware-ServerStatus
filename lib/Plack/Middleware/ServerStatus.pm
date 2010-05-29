@@ -285,6 +285,8 @@ sub is_allowed {
             $cidr->add('192.168.0.0/16');
             $cidr->add('127.0.0.0/8');
         }
+
+        $cidr;
     };
 
     $self->{_cidr}->find($address);
