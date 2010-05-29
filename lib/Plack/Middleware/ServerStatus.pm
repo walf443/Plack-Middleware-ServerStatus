@@ -192,7 +192,7 @@ sub _handle_server_status {
 
     my $workers = _collect_worker_info();
     my $total_accesses = reduce { $a + $b->{meta}->{'req'} } 0, @$workers;
-    my $avg_req_per_sec = (reduce { $a + ($b->{meta}->{'req'} / $b->{uptime}) } 0, @$workers) / @$workers;
+    my $avg_req_per_sec = (reduce { $a + ($b->{meta}->{'req'} / ( $b->{uptime}) || 1 ) } 0, @$workers) / ( @$workers || 1);
     my $idle_worker_num = scalar grep { $_->{key} eq '_'  } @$workers;
     my $busy_worker_num = @$workers - $idle_worker_num;
     my $scoreboard = join '', map { $_->{key} } @$workers;
